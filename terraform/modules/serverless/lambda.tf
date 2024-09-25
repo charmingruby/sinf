@@ -1,5 +1,5 @@
 resource "null_resource" "build_lambda" {
-  for_each = { for idx, lambda in var.lambdas_definition : idx => lambda }
+  for_each = { for idx, lambda in var.lambdas : idx => lambda }
 
   provisioner "local-exec" {
     command = <<EOT
@@ -12,7 +12,7 @@ resource "null_resource" "build_lambda" {
 }
 
 resource "aws_s3_object" "lambda_zip_bucket" {
-  for_each   = { for idx, lambda in var.lambdas_definition : idx => lambda }
+  for_each   = { for idx, lambda in var.lambdas : idx => lambda }
   depends_on = [null_resource.build_lambda]
 
   bucket = "lambdas-zip-bucket"
@@ -21,7 +21,7 @@ resource "aws_s3_object" "lambda_zip_bucket" {
 }
 
 resource "aws_lambda_function" "lambda" {
-  for_each   = { for idx, lambda in var.lambdas_definition : idx => lambda }
+  for_each   = { for idx, lambda in var.lambdas : idx => lambda }
   depends_on = [aws_s3_object.lambda_zip_bucket]
 
   function_name = each.value.lambda.name

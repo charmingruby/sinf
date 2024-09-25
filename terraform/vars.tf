@@ -7,7 +7,7 @@ variable "project_name" {
   type = string
 }
 
-variable "lambdas_definition" {
+variable "lambdas" {
   description = "List of lambdas with own http definitions"
   type = list(object({
     name   = string
