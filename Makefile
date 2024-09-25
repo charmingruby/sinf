@@ -6,13 +6,14 @@ LAMBDAS := hello world
 
 define build_lambda
 	@echo "Building $(1)..."
-	GOOS=linux GOARCH=amd64 go build -o $(BINARY_DIR)/$(1) $(LAMBDA_DIR)/$(1)/main.go
+	GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bin/${1} ./function/${1}/main.go
 	@echo "Packaging $(1)..."
-	zip -j $(PACKAGED_LAMBDA_DIR)/$(1).zip $(BINARY_DIR)/$(1)
+	cp bin/${1} bin/bootstrap
+    zip -j dist/bootstrap.zip bin/bootstrap
 	@echo "$(1) built and packaged successfully."
 endef
 
-bootstrap: $(LAMBDAS)
+bootstrap: $(LAMBDAS) 
 
 build-func:
 	@echo "Building and packaging Lambda: $(LAMBDA)"
@@ -21,11 +22,4 @@ build-func:
 $(LAMBDAS):
 	$(call build_lambda,$@)
 
-clean:
-	@echo "Cleaning up..."
-	@for lambda in $(LAMBDAS); do \
-		rm -f $(BINARY_DIR)/$$lambda $(PACKAGED_LAMBDA_DIR)/$$lambda.zip; \
-	done
-	@echo "Cleanup complete."
-
-.PHONY: bootstrap build-func clean 
+.PHONY: bootstrap build-func 
