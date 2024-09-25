@@ -4,8 +4,7 @@ variable "aws_region" {
 }
 
 variable "project_name" {
-  type    = string
-  default = "sinf"
+  type = string
 }
 
 variable "lambdas_definition" {
