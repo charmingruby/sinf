@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "lambda_assume_role" {
 }
 
 resource "aws_iam_role" "rest_api_role" {
-  name               = "${var.project_name}-lambda-role"
+  name               = "${var.project_resource_naming}-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 }
 
@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "create_logs_cloudwatch" {
 }
 
 resource "aws_iam_policy" "create_logs_cloudwatch" {
-  name   = "${var.project_name}-policy"
+  name   = "${var.project_resource_naming}-policy"
   policy = data.aws_iam_policy_document.create_logs_cloudwatch.json
 }
 

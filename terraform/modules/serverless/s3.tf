@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "lambda_zip_bucket" {
-  bucket = "${var.project_name}-lambdas-zip-bucket"
+  bucket = "${var.project_resource_naming}-lambdas-zip-bucket"
 }
 
 resource "aws_s3_object" "lambda_zip_object_bucket" {

@@ -1,14 +1,17 @@
 variable "aws_region" {
-  type    = string
-  default = "us-east-1"
+  description = "AWS Region"
+  type        = string
+  default     = "us-east-1"
 }
 
 variable "aws_account_id" {
-  type = string
+  description = "AWS Accont ID"
+  type        = string
 }
 
-variable "project_name" {
-  type = string
+variable "project_resource_naming" {
+  description = "Project name to be used for naming resources"
+  type        = string
 }
 
 variable "lambdas" {

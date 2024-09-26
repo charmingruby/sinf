@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_api" "this" {
-  name          = "${var.project_name}-api-gateway"
+  name          = "${var.project_resource_naming}-api-gateway"
   protocol_type = "HTTP"
 }
 

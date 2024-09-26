@@ -1,6 +1,14 @@
-variable "project_name" {
+variable "project_resource_naming" {
   description = "Name of the project to be used for naming resources"
   type        = string
+}
+
+variable "tags" {
+  description = "Common tags to be used for all resources"
+  type = object({
+    Project    = string
+    Department = string
+  })
 }
 
 variable "s3_key_lambda_prefix" {
@@ -18,9 +26,11 @@ variable "lambdas" {
 }
 
 variable "aws_account_id" {
-  type = string
+  description = "AWS Accont ID"
+  type        = string
 }
 
 variable "aws_region" {
-  type = string
+  description = "AWS Region"
+  type        = string
 }
