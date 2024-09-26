@@ -1,7 +1,17 @@
-module "serverless" {
-  source         = "./modules/serverless"
-  aws_region     = var.aws_region
-  aws_account_id = var.aws_account_id
-  lambdas        = var.lambdas
-  project_name   = var.project_name
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.48.0"
+    }
+  }
+  backend "s3" {
+    bucket = "sinf-iac"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
