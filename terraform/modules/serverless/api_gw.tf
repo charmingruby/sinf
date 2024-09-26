@@ -26,3 +26,12 @@ resource "aws_apigatewayv2_route" "lambdas_route" {
   route_key = "${upper(each.value.method)} ${each.value.path}"
   target    = "integrations/${aws_apigatewayv2_integration.lambdas_integration[each.value.name].id}"
 }
+
+resource "aws_lambda_permission" "api" {
+  for_each = { for lambda in var.lambdas : lambda.name => lambda }
+
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambdas[each.key].arn
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "arn:aws:execute-api:${var.aws_region}:${var.aws_account_id}:${aws_apigatewayv2_api.this.id}/*/*"
+}
