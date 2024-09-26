@@ -1,6 +1,6 @@
 locals {
   tags = {
-    Project    = "Lambda PoC"
+    Project    = "Serverless Provisioning PoC"
     Department = "Cloud"
   }
 }
