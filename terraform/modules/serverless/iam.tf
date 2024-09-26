@@ -41,5 +41,5 @@ resource "aws_iam_policy" "create_logs_cloudwatch" {
 
 resource "aws_iam_role_policy_attachment" "sinf_cloudwatch" {
   policy_arn = aws_iam_policy.create_logs_cloudwatch.arn
-  role       = aws_iam_role.rest_api_role.name
+  role       = aws_iam_role.rest_api_role.id
 }
