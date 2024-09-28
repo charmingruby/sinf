@@ -1,12 +1,26 @@
 resource "aws_apigatewayv2_api" "this" {
   name          = "${var.project_resource_naming}-api-gateway"
   protocol_type = "HTTP"
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.project_resource_naming}-api-gatewayv2"
+    }
+  )
 }
 
 resource "aws_apigatewayv2_stage" "this" {
   api_id      = aws_apigatewayv2_api.this.id
   name        = "$default"
   auto_deploy = true
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.project_resource_naming}-api-gatewayv2-stage"
+    }
+  )
 }
 
 resource "aws_apigatewayv2_integration" "this" {

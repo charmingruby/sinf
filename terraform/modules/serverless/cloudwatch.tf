@@ -3,4 +3,11 @@ resource "aws_cloudwatch_log_group" "this" {
 
   name              = "/aws/lambda/${each.key}"
   retention_in_days = 3
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.project_resource_naming}-${each.key}-lambda-log-group"
+    }
+  )
 }

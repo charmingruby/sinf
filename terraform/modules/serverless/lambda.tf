@@ -32,4 +32,11 @@ resource "aws_lambda_function" "this" {
       LOG_GROUP = "/aws/lambda/${each.key}"
     }
   }
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.project_resource_naming}-${each.key}-lambda-function"
+    }
+  )
 }

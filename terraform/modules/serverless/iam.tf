@@ -15,6 +15,13 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
 resource "aws_iam_role" "lambda_role" {
   name               = "${var.project_resource_naming}-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.project_resource_naming}-lambda-role"
+    }
+  )
 }
 
 ###################
@@ -43,6 +50,13 @@ data "aws_iam_policy_document" "create_logs_cloudwatch_policy_document" {
 resource "aws_iam_policy" "create_logs_cloudwatch_policy" {
   name   = "${var.project_resource_naming}-policy"
   policy = data.aws_iam_policy_document.create_logs_cloudwatch_policy_document.json
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.project_resource_naming}-create-logs-cloudwatch-policy"
+    }
+  )
 }
 
 resource "aws_iam_role_policy_attachment" "create_logs_cloudwatch_policy_attachment" {
