@@ -1,20 +1,26 @@
-data "aws_iam_policy_document" "lambda_assume_role" {
+###################
+# LAMBDAS         #
+###################
+data "aws_iam_policy_document" "lambda_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
+      type        = "Service"
     }
   }
 }
 
-resource "aws_iam_role" "rest_api_role" {
+resource "aws_iam_role" "lambda_role" {
   name               = "${var.project_resource_naming}-lambda-role"
-  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 }
 
-data "aws_iam_policy_document" "create_logs_cloudwatch" {
+###################
+# CLOUDWATCH      #
+###################
+data "aws_iam_policy_document" "create_logs_cloudwatch_policy_document" {
   statement {
     sid       = "AllowCreatingLogGroups"
     effect    = "Allow"
@@ -34,12 +40,12 @@ data "aws_iam_policy_document" "create_logs_cloudwatch" {
   }
 }
 
-resource "aws_iam_policy" "create_logs_cloudwatch" {
+resource "aws_iam_policy" "create_logs_cloudwatch_policy" {
   name   = "${var.project_resource_naming}-policy"
-  policy = data.aws_iam_policy_document.create_logs_cloudwatch.json
+  policy = data.aws_iam_policy_document.create_logs_cloudwatch_policy_document.json
 }
 
-resource "aws_iam_role_policy_attachment" "sinf_cloudwatch" {
-  policy_arn = aws_iam_policy.create_logs_cloudwatch.arn
-  role       = aws_iam_role.rest_api_role.id
+resource "aws_iam_role_policy_attachment" "create_logs_cloudwatch_policy_attachment" {
+  policy_arn = aws_iam_policy.create_logs_cloudwatch_policy.arn
+  role       = aws_iam_role.lambda_role.id
 }

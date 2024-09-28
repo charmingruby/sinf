@@ -1,12 +1,12 @@
-resource "aws_s3_bucket" "lambda_zip_bucket" {
-  bucket = "${var.project_resource_naming}-lambdas-zip-bucket"
+resource "aws_s3_bucket" "this" {
+  bucket = "${var.project_resource_naming}-lambdas"
 }
 
-resource "aws_s3_object" "lambda_zip_object_bucket" {
+resource "aws_s3_object" "this" {
   for_each = { for lambda in var.lambdas : lambda.name => lambda }
 
   depends_on = [null_resource.build_lambda]
-  bucket     = aws_s3_bucket.lambda_zip_bucket.bucket
+  bucket     = aws_s3_bucket.this.bucket
   key        = each.key
   source     = "dist/${each.key}.zip"
 }

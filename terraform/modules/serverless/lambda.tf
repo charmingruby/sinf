@@ -11,16 +11,16 @@ resource "null_resource" "build_lambda" {
   }
 }
 
-resource "aws_lambda_function" "lambdas" {
+resource "aws_lambda_function" "this" {
   for_each   = { for lambda in var.lambdas : lambda.name => lambda }
-  depends_on = [aws_s3_object.lambda_zip_object_bucket]
+  depends_on = [aws_s3_object.this]
 
   function_name = each.value.name
-  s3_bucket     = aws_s3_object.lambda_zip_object_bucket[each.key].bucket
-  s3_key        = aws_s3_object.lambda_zip_object_bucket[each.key].key
+  s3_bucket     = aws_s3_object.this[each.key].bucket
+  s3_key        = aws_s3_object.this[each.key].key
   handler       = "bootstrap"
   runtime       = "provided.al2"
-  role          = aws_iam_role.rest_api_role.arn
+  role          = aws_iam_role.lambda_role.arn
   memory_size   = each.value.memory_size
 
   tracing_config {
