@@ -19,9 +19,10 @@ variable "s3_key_lambda_prefix" {
 variable "lambdas" {
   description = "List of lambdas with own http definitions"
   type = list(object({
-    name   = string
-    path   = string
-    method = string
+    name        = string
+    path        = string
+    method      = string
+    memory_size = number
   }))
 }
 

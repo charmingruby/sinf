@@ -17,8 +17,9 @@ variable "project_resource_naming" {
 variable "lambdas" {
   description = "List of lambdas with own http definitions"
   type = list(object({
-    name   = string
-    path   = string
-    method = string
+    name        = string
+    path        = string
+    method      = string
+    memory_size = number
   }))
 }

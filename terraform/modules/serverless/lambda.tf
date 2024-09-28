@@ -21,7 +21,7 @@ resource "aws_lambda_function" "lambdas" {
   handler       = "bootstrap"
   runtime       = "provided.al2"
   role          = aws_iam_role.rest_api_role.arn
-
+  memory_size   = each.value.memory_size
 
   tracing_config {
     mode = "Active"
@@ -29,7 +29,6 @@ resource "aws_lambda_function" "lambdas" {
 
   environment {
     variables = {
-      LOG_LEVEL = "DEBUG"
       LOG_GROUP = "/aws/lambda/${each.key}"
     }
   }
