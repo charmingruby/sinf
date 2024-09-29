@@ -10,7 +10,7 @@ import (
 )
 
 func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	json, err := function.NewResponseBody("hello").Marshal()
+	json, err := function.NewResponseBody("hello?").Marshal()
 	if err != nil {
 		return function.NewResponse(http.StatusInternalServerError, []byte(err.Error())), err
 	}
