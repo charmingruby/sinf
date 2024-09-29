@@ -33,7 +33,7 @@ jobs:
           mkdir -p dist
           for lambda in $(ls -d function/*/); do
             lambda_name=$(basename $lambda)
-            GOOS=linux GOARCH=amd64 go build -o bin/bootstrap $lambda/main.go
+            GOOS=linux CGO_ENABLED=0 GOARCH=amd64 go build -tags lambda.norpc -o bin/bootstrap $lambda/main.go
             zip -j dist/${lambda_name}.zip bin/bootstrap
           done
 

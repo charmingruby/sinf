@@ -5,7 +5,7 @@ resource "null_resource" "build_lambda" {
     command = <<EOT
       mkdir -p bin
       mkdir -p dist
-      GOOS=linux CGO_ENABLED=0 GOARCH=amd64 go build -o bin/bootstrap ../function/${each.value.name}/main.go
+      GOOS=linux CGO_ENABLED=0 GOARCH=amd64 go build -tags lambda.norpc -o bin/bootstrap ../function/${each.value.name}/main.go
       zip -j dist/${each.value.name}.zip bin/bootstrap
     EOT
   }
