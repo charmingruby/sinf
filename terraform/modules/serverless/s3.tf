@@ -2,7 +2,7 @@ resource "aws_s3_bucket" "this" {
   bucket = "${var.project_resource_naming}-lambdas"
 
   tags = merge(
-    VAR.tags,
+    var.tags,
     {
       Name = "${var.project_resource_naming}-lambdas-bucket"
     }
@@ -18,7 +18,7 @@ resource "aws_s3_object" "this" {
   source     = "dist/${each.key}.zip"
 
   tags = merge(
-    VAR.tags,
+    var.tags,
     {
       Name = "${var.project_resource_naming}-${each.key}-lambda"
     }
