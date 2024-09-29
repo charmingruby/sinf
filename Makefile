@@ -6,7 +6,7 @@ LAMBDAS := hello world
 
 define build_lambda
 	@echo "Building $(1)..."
-	GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bin/${1} ./function/${1}/main.go
+	GOOS=linux CGO_ENABLED=0 GOARCH=amd64 go build -tags lambda.norpc -o bin/${1} ./function/${1}/main.go
 	@echo "Packaging $(1)..."
 	cp bin/${1} bin/bootstrap
     zip -j dist/bootstrap.zip bin/bootstrap
